@@ -33,7 +33,7 @@ void makeFace(unsigned int newEyeColor, unsigned int newFaceColor)
     for (int y = centerY - radius; y <= centerY + radius; y++) {
       int distanceSquared = (x - centerX) * (x - centerX) + (y - centerY) * (y - centerY);
       if (distanceSquared <= radius * radius) {
-	      drawPixel(x, y, faceColor); // Color for face
+	drawPixel(x, y, faceColor); // Color for face
       }
     }
   }
@@ -46,7 +46,7 @@ void makeFace(unsigned int newEyeColor, unsigned int newFaceColor)
     for (int y = centerY - eyeOffsetY - eyeRadius; y <= centerY - eyeOffsetY + eyeRadius; y++) {
       int distanceSquared = (x - (centerX - eyeOffsetX)) * (x - (centerX - eyeOffsetX)) + (y - (centerY - eyeOffsetY)) * (y - (centerY - eyeOffsetY));
       if (distanceSquared <= eyeRadius * eyeRadius) {
-	      drawPixel(x, y, eyeColor);
+	drawPixel(x, y, eyeColor);
       }
     }
   }
@@ -55,7 +55,7 @@ void makeFace(unsigned int newEyeColor, unsigned int newFaceColor)
     for (int y = centerY - eyeOffsetY - eyeRadius; y <= centerY - eyeOffsetY + eyeRadius; y++) {
       int distanceSquared = (x - (centerX + eyeOffsetX)) * (x - (centerX + eyeOffsetX)) + (y - (centerY - eyeOffsetY)) * (y - (centerY - eyeOffsetY));
       if (distanceSquared <= eyeRadius * eyeRadius) {
-	      drawPixel(x, y, eyeColor); // Always draw open eyes
+	drawPixel(x, y, eyeColor); // Always draw open eyes
       }
     }
   }
