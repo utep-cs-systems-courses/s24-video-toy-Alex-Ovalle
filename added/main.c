@@ -3,6 +3,16 @@
 #include "led.h"
 #include "switches.h"
 #include "buzzer.h"
+#include <msp430.h>
+#include "lcdutils.h"
+#include "lcddraw.h"
+#include "statemachines.h"
+#include "wakedemo.h"
+
+extern int redrawScreen;
+int redrawScreen = 1;
+int eyes_open;
+int state;
 
 int main(void){
   configureClocks();
@@ -13,5 +23,20 @@ int main(void){
   green_on();
   enableWDTInterrupts();
 
-  or_sr(0x18); // CPU off, GIE on   
+  or_sr(0x18); // CPU off, GIE on
+
+  state = 1;
+  eyes_open = 1;
+  while(1) {
+ 
+    if(redrawScreen)  {
+
+      redrawScreen = 0;
+
+      update_eyes(state);
+    }
+
+    or_sr(0x10);
+
+  }   
 }
