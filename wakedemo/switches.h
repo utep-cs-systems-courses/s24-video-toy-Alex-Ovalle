@@ -7,7 +7,7 @@
 #define S3 BIT2
 #define S4 BIT3
 
-#define SWITCHES (S1 | S2 | S3 | S4)
+#define switches (S1 | S2 | S3 | S4)
 
 extern int state_flag;
 
