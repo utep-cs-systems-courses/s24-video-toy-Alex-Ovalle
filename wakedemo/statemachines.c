@@ -15,13 +15,13 @@ void next_state(int state) {
   case 1:
     newFaceColor = COLOR_PINK;
     newEyeColor = COLOR_BLUE;
-    void drawCatFaceEmoji(newFaceColor, newEyeColor);
+    drawCatFaceEmoji(newFaceColor, newEyeColor);
     keyboard_cat();
     break;
 
     newFaceColor = COLOR_BLUE;
     newEyeColor = COLOR_PINK;
-    void drawCatFaceEmoji(newFaceColor, newEyeColor);
+    drawCatFaceEmoji(newFaceColor, newEyeColor);
     flash(5);
     jigglypuff();
     green_on();
@@ -32,7 +32,7 @@ void next_state(int state) {
   case 3:
     newFaceColor = BLACK;
     newEyeColor = COLOR_RED;
-    void drawCatFaceEmoji(newFaceColor, newEyeColor);
+    drawCatFaceEmoji(newFaceColor, newEyeColor);
     green_on();
     red_on();
     red_off();
