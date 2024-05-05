@@ -18,7 +18,8 @@ void next_state(int state) {
     drawCatFaceEmoji(newFaceColor, newEyeColor);
     keyboard_cat();
     break;
-
+  
+  case 2:
     newFaceColor = COLOR_BLUE;
     newEyeColor = COLOR_PINK;
     drawCatFaceEmoji(newFaceColor, newEyeColor);

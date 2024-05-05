@@ -25,24 +25,19 @@ void drawCatFaceEmoji(unsigned int newColor1, unsigned int newColor2) {
     unsigned int otherColor = newColor2;
   
     // Draw face
-    drawFilledCircle(64, 32, 30, faceColor);  // Draw a filled circle for the face
+    drawFilledCircle(screenWidth/2, screenHeight/2, 50, faceColor);  // Draw a filled circle for the face
 
     // Draw eyes
-    drawFilledCircle(50, 25, 5, otherColor);    // Left eye
-    drawFilledCircle(78, 25, 5, otherColor);    // Right eye
+    drawFilledCircle((screenWidth/2)-20, (screenHeight/2)-15, 10, otherColor);    // Left eye
+    drawFilledCircle((screenWidth/2)+20, (screenHeight/2)-15, 10, otherColor);    // Right eye
 
     // Draw whiskers
-    fillRectangle(50, 35, 40, 30, otherColor);  // Left whisker
-    fillRectangle(50, 35, 40, 40, otherColor);
-    fillRectangle(78, 35, 88, 30, otherColor);  // Right whisker
-    fillRectangle(78, 35, 88, 40, otherColor);
+    fillRectangle(screenWidth / 2 - 30, screenHeight / 2, 15, 2, otherColor); // Left whisker
+    fillRectangle(screenWidth / 2 + 15, screenHeight / 2, 15, 2, otherColor); // Right whisker
 
-    // Draw mouth (smile)
-    fillRectangle(55, 40, 70, 40, otherColor);   // Draw a curved line for the smile
-    fillRectangle(55, 41, 70, 41, otherColor);
-    fillRectangle(55, 42, 70, 42, otherColor);
-    fillRectangle(55, 43, 70, 43, otherColor);
-    fillRectangle(55, 44, 70, 44, otherColor);
+
+    // Draw mouth
+    fillRectangle(screenWidth / 2 - 20, screenHeight / 2 + 30, 40, 2, otherColor);
 }
 
 void drawFilledCircle(int centerX, int centerY, int radius, unsigned int color) {
