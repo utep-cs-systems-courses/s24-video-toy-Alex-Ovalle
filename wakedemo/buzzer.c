@@ -33,7 +33,7 @@ void tloz() {
     F5,16, F4,16, F4,16, F4,16,F4,16,F4,16,F4,16,F4,16,F4,8, F4,16,F4,8};
   int total_notes = sizeof(melody) / sizeof(melody[0]);
 
-  for(int i = 0; i < 32; i++){
+  for(int i = 0; i < total_notes; i++){
       buzzer_set_period(melody[i]);
       __delay_cycles(2500000);
       buzzer_set_period(0);
@@ -51,6 +51,35 @@ void keyboard_cat() {
     A3,4, C4,8, E4,-4, C4,4,
     G3,4, B3,4, D4,4, B3,4,
     G3,4, B3,8, D4,-4, B3,4,
+  };
+
+  int total_notes = sizeof(melody) / sizeof(melody[0]);
+
+  for (int i = 0; i < total_notes; i++) {
+    buzzer_set_period(melody[i]);
+    __delay_cycles(2500000);
+    buzzer_set_period(0);
+    __delay_cycles(100000);
+  }
+  buzzer_set_period(0);
+}
+
+void jigglypuff(){
+  int melody[] = {
+    D5,-4, A5,8, FS5,8, D5,8,
+    E5,-4, FS5,8, G5,4,
+    FS5,-4, E5,8, FS5,4,
+    D5,-2,
+    D5,-4, A5,8, FS5,8, D5,8,
+    E5,-4, FS5,8, G5,4,
+    FS5,-1,
+    D5,-4, A5,8, FS5,8, D5,8,
+    E5,-4, FS5,8, G5,4,
+    FS5,-4, E5,8, FS5,4,
+    D5,-2,
+    D5,-4, A5,8, FS5,8, D5,8,
+    E5,-4, FS5,8, G5,4,
+    FS5,-1,
   };
 
   int total_notes = sizeof(melody) / sizeof(melody[0]);
