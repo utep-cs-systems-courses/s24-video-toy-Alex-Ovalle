@@ -6,8 +6,7 @@
 
 char stateDown;
 
-void sw_init()
-{
+void sw_init() {
   P2REN |= switches;
   P2IE |= switches;
   P2OUT |= switches;
@@ -19,17 +18,26 @@ void sw_init()
 }
 
 
-char sw_update_interrupt_sense()
-{
+char sw_update_interrupt_sense() {
   char p2Value = P2IN;
   P2IES |= (p2Value & switches);/* if switch up, sense down */
   P2IES &= (p2Value | ~switches);/* if switch down, sense up */
   return p2Value;
 }
 
+char sw_zero_update_interrupt_sense(){
+  char p1Value = P1IN;
+  // update switch interrupt to detect changes from current buttons
+  // sense down/up if switch up/down
+  P1IES |= (p1Value & S0); 
+  P1IES &= (p1Value | ~S0);
 
-void sw_interrupt_handler()
-{
+  return p1Value;
+} 
+
+
+void sw_interrupt_handler() {
+  char p1Value = sw_zero_update_interrupt_sense();
   char p2Value = sw_update_interrupt_sense();
   char button1 = (p2Value & S1) ? 0 : S1;
   char button2 = (p2Value & S2) ? 0 : S2;

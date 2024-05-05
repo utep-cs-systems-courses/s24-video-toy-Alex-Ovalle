@@ -7,11 +7,12 @@
 #define S4 BIT3
 
 
-#define switches (S1 | S2 | S3 | S4) /* 4 switches on the board */
+#define switches (S1 | S2 | S3 | S4) // defining the 4 switches on msp
 
 
 void sw_init();
 static char sw_update_interrupt_sense();
+static char sw_zero_update_interrupt_sense();
 void sw_interrupt_handler();
 
 
