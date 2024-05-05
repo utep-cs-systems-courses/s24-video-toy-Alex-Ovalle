@@ -21,12 +21,13 @@ int main(void)
 {
   configureClocks();
   lcd_init();
-  switch_init(); // switches
-  led_init(); // LED
-  buzzer_init(); // Buzzer
+  sw_init();
+  led_init();
+  buzz_init();
   green_on();
   enableWDTInterrupts();
   or_sr(0x8);
+  
   state = 1;
   eyes_open = 1;
   while(1)

@@ -5,90 +5,51 @@
 
 extern int redrawScreen;
 
-void switch_init()
+void sw_init(){
+  P2REN |= switches;
+  P2IE |= switches;
+  P2OUT |= switches;
+  P2DIR &= ~switches;
 
-{
-
-  P2REN |= SWITCHES;
-  P2IE |= SWITCHES;
-  P2OUT |= SWITCHES;
-  P2DIR &= ~SWITCHES;
-
-  P1REN |= SW0;
-  P1IE |= SW0;
-  P1OUT |= SW0;//side button initialization
-  P1DIR &= ~SW0;
-
+  P1REN |= S0;
+  P1IE |= S0;
+  P1OUT |= S0;//side button initialization
+  P1DIR &= ~S0;
 }
 
-char
-
-switch_zero_update_interrupt_sense()
-
-{
-
-  char p1val = P1IN;
-
-  /* update switch interrupt to detect changes from current buttons */
-
-  P1IES |= (p1val & SW0);/* if switch up, sense down */
-
-  P1IES &= (p1val | ~SW0);/* if switch down, sense up */
-
-  return p1val;
-
-}
-char
-
-switch_update_interrupt_sense()
-
-{
-
-  char p2val = P2IN;
-
-  /* update switch interrupt to detect changes from current buttons */
-
-  P2IES |= (p2val & SWITCHES);/* if switch up, sense down */
-
-  P2IES &= (p2val | ~SWITCHES);/* if switch down, sense up */
-
-  return p2val;
-
+char sw_zero_update_interrupt_sense(){
+  char p1Value = P1IN;
+  // if switch up/down , sense down/ up 
+  P1IES |= (p1Value & S0);
+  P1IES &= (p1Value | ~S0);
+  return p1Value;
 }
 
-void switch_interrupt_handler()
-{
+char sw_update_interrupt_sense(){
+  char p2Value = P2IN;
+  // if switch up/down , sense down/ up 
+  P2IES |= (p2Value & switches);
+  P2IES &= (p2Value | ~switches);
+  return p2Value;
+}
 
+void sw_interrupt_handler(){
+  char p1Value = sw_zero_update_interrupt_sense();
+  char p2Value = sw_update_interrupt_sense();
+  char button0 = (p1Value & S0) ? 0 : S0;
+  char button1 = (p2Value & S1) ? 0 : S1;
+  char button2 = (p2Value & S2) ? 0 : S2;
+  char button3 = (p2Value & S3) ? 0 : S3;
+  char button4 = (p2Value & S4) ? 0 : S4;
 
-  char p1val = switch_zero_update_interrupt_sense();
-  char p2val = switch_update_interrupt_sense();
-  char button_0 = (p1val & SW0) ? 0 : SW0;
-  char button_1 = (p2val & SW1) ? 0 : SW1;
-  char button_2 = (p2val & SW2) ? 0 : SW2;
-  char button_3 = (p2val & SW3) ? 0 : SW3;
-  char button_4 = (p2val & SW4) ? 0 : SW4;
-
-  if (button_0)
-    {
+  if (button0)
       next_state(0);
-    }
-
-  else if (button_1)
-    {
+  else if (button1)
       next_state(1);
-    }
-  else if (button_2)
-    {
+  else if (button2)
       next_state(2);
-    }
-
-  else if (button_3)
-    {
+  else if (button3)
       next_state(3);
-    }
-
-  else if(button_4)
-    {
+  else if(button4)
       next_state(4);
-    }
 }

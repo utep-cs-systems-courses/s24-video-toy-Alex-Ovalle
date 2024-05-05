@@ -16,7 +16,7 @@ void next_state(int state) {
     newEyeColor = COLOR_BLUE;
     newFaceColor = COLOR_PINK;
     makeFace(newEyeColor, newFaceColor);
-    kirby_song();
+    keyboard_cat();
     break;
 
   case 2:
@@ -24,7 +24,7 @@ void next_state(int state) {
     newFaceColor = COLOR_BEIGE;
     makeFace(newEyeColor, newFaceColor);
     flash(3);
-    mario_jingle();
+    tloz();
     green_on();
     green_off();
     red_off();
