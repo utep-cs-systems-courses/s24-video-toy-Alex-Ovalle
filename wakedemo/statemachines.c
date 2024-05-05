@@ -42,7 +42,7 @@ void next_state(int state) {
 
   case 4:
     drawString5x7((screenHeight/2),(screenWidth/2)-10, "meow", COLOR_ORANGE, COLOR_BLACK);
-    drawUnderLine(15, screenHeight - 15, 100);
+    drawUnderlineAssembly(15, screenHeight - 15, 83, COLOR_RED);
     green_on();
     red_on();
     break;

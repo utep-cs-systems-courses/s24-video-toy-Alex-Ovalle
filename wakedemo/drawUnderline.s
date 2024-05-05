@@ -19,8 +19,8 @@ Top:
 	jc End
 	add.b #1, 0(r1)
 	mov.b 0(r1), r12
-	mov.b 1(r1),r13
-	mov 0xFF0000,r14
+	mov.b 1(r1), r13
+	mov r15, r14
 	call #drawPixel
 	add.b #1, 4(r1)
 	jmp Top
