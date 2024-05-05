@@ -1,115 +1,75 @@
 #include <msp430.h>
+#include <math.h>
 #include <libTimer.h>
 #include "lcdutils.h"
 #include "lcddraw.h"
+#include "wakedemo.h"
 
-// WARNING: LCD DISPLAY USES P1.0.  Do not touch!!! 
-
-#define LED BIT6		/* note that bit zero req'd for display */
-
-#define SW1 1
-#define SW2 2
-#define SW3 4
-#define SW4 8
-
-#define SWITCHES 15
-
-char blue = 31, green = 0, red = 31;
-unsigned char step = 0;
-
+unsigned int color = COLOR_GREEN;
+unsigned int faceColor = COLOR_BLACK;
+void update_eyes(int state)
+{
+  if(state)
+    {
+      eyes_open = 1;
+      makeFace(color,faceColor);
+    }
+}
 
 // axis zero for col, axis 1 for row
-
 short drawPos[2] = {1,10}, controlPos[2] = {2, 10};
 short colVelocity = 1, colLimits[2] = {1, screenWidth/2};
 
-void
-draw_ball(int col, int row, unsigned short color)
+void makeFace(unsigned int newEyeColor, unsigned int newFaceColor)
 {
-  fillRectangle(col-1, row-1, 3, 3, color);
-}
-
-
-void
-screen_update_ball()
-{
-  for (char axis = 0; axis < 2; axis ++) 
-    if (drawPos[axis] != controlPos[axis]) /* position changed? */
-      goto redraw;
-  return;			/* nothing to do */
- redraw:
-  draw_ball(drawPos[0], drawPos[1], COLOR_BLUE); /* erase */
-  for (char axis = 0; axis < 2; axis ++) 
-    drawPos[axis] = controlPos[axis];
-  draw_ball(drawPos[0], drawPos[1], COLOR_WHITE); /* draw */
-}
+  unsigned int faceColor = newFaceColor;
+  unsigned int eyeColor = newEyeColor;
   
-
-short redrawScreen = 1;
-u_int controlFontColor = COLOR_GREEN;
-
-void wdt_c_handler()
-{
-  static int secCount = 0;
-
-  secCount ++;
-  if (secCount >= 25) {		/* 10/sec */
-   
-    {				/* move ball */
-      short oldCol = controlPos[0];
-      short newCol = oldCol + colVelocity;
-      if (newCol <= colLimits[0] || newCol >= colLimits[1])
-	colVelocity = -colVelocity;
-      else
-	controlPos[0] = newCol;
-    }
-
-    {				/* update hourglass */
-      if (switches & S3) green = (green + 1) % 64;
-      if (switches & S2) blue = (blue + 2) % 32;
-      if (switches & S1) red = (red - 3) % 32;
-      if (step <= 30)
-	step ++;
-      else
-	step = 0;
-      secCount = 0;
-    }
-    if (switches & SW4) return;
-    redrawScreen = 1;
-  }
-}
-  
-void update_shape();
-
-void
-screen_update_hourglass()
-{
-  static unsigned char row = screenHeight / 2, col = screenWidth / 2;
-  static char lastStep = 0;
-  
-  if (step == 0 || (lastStep > step)) {
-    clearScreen(COLOR_BLUE);
-    lastStep = 0;
-  } else {
-    for (; lastStep <= step; lastStep++) {
-      int startCol = col - lastStep;
-      int endCol = col + lastStep;
-      int width = 1 + endCol - startCol;
-      
-      // a color in this BGR encoding is BBBB BGGG GGGR RRRR
-      unsigned int color = (blue << 11) | (green << 5) | red;
-      
-      fillRectangle(startCol, row+lastStep, width, 1, color);
-      fillRectangle(startCol, row-lastStep, width, 1, color);
+  int centerX = screenWidth / 2;
+  int centerY = screenHeight / 2;
+  int radius = 50;              
+  //Draw face
+  for (int x = centerX - radius; x <= centerX + radius; x++) {
+    for (int y = centerY - radius; y <= centerY + radius; y++) {
+      int distanceSquared = (x - centerX) * (x - centerX) + (y - centerY) * (y - centerY);
+      if (distanceSquared <= radius * radius) {
+	      drawPixel(x, y, faceColor); // Color for face
+      }
     }
   }
-}  
 
+  int eyeRadius = 5;
+  int eyeOffsetX = 15;
+  int eyeOffsetY = 10;
+  //Draw Left eye
+  for (int x = centerX - eyeOffsetX - eyeRadius; x <= centerX - eyeOffsetX + eyeRadius; x++) {
+    for (int y = centerY - eyeOffsetY - eyeRadius; y <= centerY - eyeOffsetY + eyeRadius; y++) {
+      int distanceSquared = (x - (centerX - eyeOffsetX)) * (x - (centerX - eyeOffsetX)) + (y - (centerY - eyeOffsetY)) * (y - (centerY - eyeOffsetY));
+      if (distanceSquared <= eyeRadius * eyeRadius) {
+	      drawPixel(x, y, eyeColor);
+      }
+    }
+  }
+  //draw right eye
+  for (int x = centerX + eyeOffsetX - eyeRadius; x <= centerX + eyeOffsetX + eyeRadius; x++) {
+    for (int y = centerY - eyeOffsetY - eyeRadius; y <= centerY - eyeOffsetY + eyeRadius; y++) {
+      int distanceSquared = (x - (centerX + eyeOffsetX)) * (x - (centerX + eyeOffsetX)) + (y - (centerY - eyeOffsetY)) * (y - (centerY - eyeOffsetY));
+      if (distanceSquared <= eyeRadius * eyeRadius) {
+	      drawPixel(x, y, eyeColor); // Always draw open eyes
+      }
+    }
+  }
+}
 
-    
-void
-update_shape()
+void drawDiagonal(unsigned char col, unsigned char row, unsigned char size)
 {
-  screen_update_ball();
-  screen_update_hourglass();
+  unsigned char val = 0;
+
+  while(val < size)
+    {
+      drawPixel(col,row,color);
+      col++;
+      row--;
+      val++;
+    }
 }
