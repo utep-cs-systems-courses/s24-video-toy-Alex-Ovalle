@@ -97,15 +97,12 @@ void drawFilledCircle(int centerX, int centerY, int radius, unsigned int color) 
                 drawPixel(x, y, color);               
 }
 
-void drawDiagonal(unsigned char col, unsigned char row, unsigned char size)
+void drawUnderline(unsigned char col, unsigned char row, unsigned char size)
 {
   unsigned char val = 0;
-
-  while(val < size)
-    {
+  while(val < size){
       drawPixel(col,row,color);
       col++;
-      row--;
       val++;
     }
 }
