@@ -3,20 +3,29 @@
 #include "switches.h"
 #include "statemachines.h"
 #include "buzzer.h"
+#include "lcdutils.h"
+#include "lcddraw.h"
+#include "wakedemo.h"
 
 
 // ------------------------------------------------
 void next_state(int state) {
   leds_off();
+  unsigned int newEyeColor;
+  unsigned int newFaceColor;
 
   switch(state) {
   case 1:
+    newEyeColor = COLOR_BLUE;
+    newFaceColor = COLOR_PINK;
+    makeFace(newEyeColor, newFaceColor);
     led_flash(5);
     red_on();
     green_on();
     tloz();
     red_off();
     green_off();
+
     break;
   case 2:
     red_on();

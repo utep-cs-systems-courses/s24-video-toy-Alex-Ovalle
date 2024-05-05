@@ -28,15 +28,10 @@ int main(void){
   state = 1;
   eyes_open = 1;
   while(1) {
- 
     if(redrawScreen)  {
-
       redrawScreen = 0;
-
       update_eyes(state);
     }
-
     or_sr(0x10);
-
-  }   
+  }
 }
