@@ -16,18 +16,16 @@ void next_state(int state) {
     newEyeColor = COLOR_BLUE;
     newFaceColor = COLOR_PINK;
     makeFace(newEyeColor, newFaceColor);
-    flash(5);
     keyboard_cat();
-    flash(5);
     break;
 
   case 2:
     newEyeColor = COLOR_RED;
     newFaceColor = COLOR_BEIGE;
     makeFace(newEyeColor, newFaceColor);
-    red_on();
+    flash(5);
+    jigglypuff();
     green_on();
-    tloz();
     green_off();
     red_off();
     break;
@@ -37,13 +35,13 @@ void next_state(int state) {
     newFaceColor = COLOR_BROWN;
     makeFace(newEyeColor,newFaceColor);
     green_on();
+    red_on();
+    red_off();
     green_off();
-    flash(10);
-    jigglypuff();
     break;
 
   case 4:
-    drawString5x7(20,20, "Hello", COLOR_GREEN, COLOR_BLACK);
+    drawString5x7(20,20, "Thank you!", COLOR_GREEN, COLOR_BLACK);
     drawDiagonalAssembly(screenHeight/2, screenWidth/2,50);
     green_on();
     red_on();

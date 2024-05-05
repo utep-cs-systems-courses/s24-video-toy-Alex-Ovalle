@@ -16,7 +16,7 @@ void buzzer_set_period(short cycles){
   CCR0 = cycles;
   CCR1 = cycles >> 1;
 }
-
+/*
 void tloz() {
   int melody[] = {  
     AS4,-2,  F4,8,  F4,8,  AS4,8,
@@ -33,7 +33,7 @@ void tloz() {
     F5,16, F4,16, F4,16, F4,16,F4,16,F4,16,F4,16,F4,16,F4,8, F4,16,F4,8};
   int total_notes = sizeof(melody) / sizeof(melody[0]);
 
-  for(int i = 0; i < total_notes; i++){
+  for(int i = 0; i < 32; i++){
       buzzer_set_period(melody[i]);
       __delay_cycles(2500000);
       buzzer_set_period(0);
@@ -41,7 +41,7 @@ void tloz() {
     }
   buzzer_set_period(0);
 }
-
+*/
 
 void keyboard_cat() {
   int melody[] = {
@@ -84,7 +84,7 @@ void jigglypuff(){
 
   int total_notes = sizeof(melody) / sizeof(melody[0]);
 
-  for (int i = 0; i < total_notes; i++) {
+  for (int i = 0; i < 32; i++) {
     buzzer_set_period(melody[i]);
     __delay_cycles(2500000);
     buzzer_set_period(0);

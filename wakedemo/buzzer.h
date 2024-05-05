@@ -3,7 +3,8 @@
 
 void buzz_init();
 void buzzer_set_period(short cycles);
-void tloz();
+//void tloz();
 void keyboard_cat();
+void jigglypuff();
 
 #endif
