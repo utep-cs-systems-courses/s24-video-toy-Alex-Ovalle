@@ -65,9 +65,9 @@ void wdt_c_handler()
     }
 
     {				/* update hourglass */
-      if (switches & SW3) green = (green + 1) % 64;
-      if (switches & SW2) blue = (blue + 2) % 32;
-      if (switches & SW1) red = (red - 3) % 32;
+      if (switches & S3) green = (green + 1) % 64;
+      if (switches & S2) blue = (blue + 2) % 32;
+      if (switches & S1) red = (red - 3) % 32;
       if (step <= 30)
 	step ++;
       else
