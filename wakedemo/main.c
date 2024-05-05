@@ -17,8 +17,7 @@ int redrawScreen = 1;
 int eyes_open;
 int state;
 
-int main(void)
-{
+int main(void){
   configureClocks();
   lcd_init();
   sw_init();
@@ -28,30 +27,22 @@ int main(void)
   enableWDTInterrupts();
   or_sr(0x8);
   
-  state = 1;
-  eyes_open = 1;
-  while(1)
-    {
-      if(redrawScreen)
-	{
-	  redrawScreen = 0;
-	  update_eyes(state);
-      }
-      or_sr(0x10);
-    }   
+  while(1){
+    if(redrawScreen){
+      redrawScreen = 0;
+      welcome();
+    }
+    or_sr(0x10);
+  }
 }
 
-void wdt_c_handler()
-{
+void wdt_c_handler(){
   static int eyes_time = 0;
-
   if(eyes_open)
-    {
-      if(eyes_time++ >= 1000)
-	{
-	  eyes_time = 0;
-	  state = 0;
-	  redrawScreen = 1;
-	}
-    }
+    if(eyes_time++ >= 1000){
+      eyes_time = 0;
+      state = 0;
+      redrawScreen = 1;
+	  }
+    
 }

@@ -8,84 +8,49 @@
 unsigned int color = COLOR_GREEN;
 unsigned int faceColor = COLOR_BLACK;
 
-void update_eyes(int state)
-{
-  if(state)
-    {
-      eyes_open = 1;
-      makeFace(color,faceColor);
-    }
+void welcome(){
+  clearScreen(WHITE);
+  drawString5x7(screenWidth/2,screenHeight/2, "Welcome!", COLOR_RED, COLOR_BLACK);
 }
 
 // axis zero for col, axis 1 for row
 short drawPos[2] = {1,10}, controlPos[2] = {2, 10};
 short colVelocity = 1, colLimits[2] = {1, screenWidth/2};
 
-void makeFace(unsigned int newEyeColor, unsigned int newFaceColor)
-{
-  unsigned int faceColor = newFaceColor;
-  unsigned int eyeColor = newEyeColor;
+void drawCatFaceEmoji(unsigned int newColor1, unsigned int newColor2) {
+    // Clear the screen
+    clearScreen(WHITE);
+
+    unsigned int faceColor = newColor1;
+    unsigned int otherColor = newColor2;
   
-  int centerX = screenWidth / 2;
-  int centerY = screenHeight / 2;
-  int radius = 50;              
-  //Draw face
-  for (int x = centerX - radius; x <= centerX + radius; x++) {
-    for (int y = centerY - radius; y <= centerY + radius; y++) {
-      int distanceSquared = (x - centerX) * (x - centerX) + (y - centerY) * (y - centerY);
-      if (distanceSquared <= radius * radius) {
-	drawPixel(x, y, faceColor); // Color for face
-      }
-    }
-  }
-
-  int eyeRadius = 5;
-  int eyeOffsetX = 15;
-  int eyeOffsetY = 10;
-  //Draw Left eye
-  for (int x = centerX - eyeOffsetX - eyeRadius; x <= centerX - eyeOffsetX + eyeRadius; x++) {
-    for (int y = centerY - eyeOffsetY - eyeRadius; y <= centerY - eyeOffsetY + eyeRadius; y++) {
-      int distanceSquared = (x - (centerX - eyeOffsetX)) * (x - (centerX - eyeOffsetX)) + (y - (centerY - eyeOffsetY)) * (y - (centerY - eyeOffsetY));
-      if (distanceSquared <= eyeRadius * eyeRadius) {
-	drawPixel(x, y, eyeColor);
-      }
-    }
-  }
-  //draw right eye
-  for (int x = centerX + eyeOffsetX - eyeRadius; x <= centerX + eyeOffsetX + eyeRadius; x++) {
-    for (int y = centerY - eyeOffsetY - eyeRadius; y <= centerY - eyeOffsetY + eyeRadius; y++) {
-      int distanceSquared = (x - (centerX + eyeOffsetX)) * (x - (centerX + eyeOffsetX)) + (y - (centerY - eyeOffsetY)) * (y - (centerY - eyeOffsetY));
-      if (distanceSquared <= eyeRadius * eyeRadius) {
-	drawPixel(x, y, eyeColor); // Always draw open eyes
-      }
-    }
-  }
-}
-
-void drawCatFace() {
     // Draw face
-    int x, y;
-    for (x = 5; x <= 62; x++) {
-        drawPixel(x, 5, BLACK);
-    }
+    drawFilledCircle(64, 32, 30, faceColor);  // Draw a filled circle for the face
 
     // Draw eyes
-    for (x = 17; x <= 25; x++) {
-        for (y = 10; y <= 15; y++) {
-            drawPixel(x, y, COLOR_BLUE);
-        }
-    }
+    drawFilledCircle(50, 25, 5, otherColor);    // Left eye
+    drawFilledCircle(78, 25, 5, otherColor);    // Right eye
 
-    for (x = 37; x <= 45; x++) {
-        for (y = 10; y <= 15; y++) {
-            drawPixel(x, y, COLOR_BLUE);
-        }
-    }
+    // Draw whiskers
+    fillRectangle(50, 35, 40, 30, otherColor);  // Left whisker
+    fillRectangle(50, 35, 40, 40, otherColor);
+    fillRectangle(78, 35, 88, 30, otherColor);  // Right whisker
+    fillRectangle(78, 35, 88, 40, otherColor);
 
-    // Draw mouth
-    for (x = 25; x <= 37; x++) {
-        drawPixel(x, 20, COLOR_BEIGE);
-    }
+    // Draw mouth (smile)
+    fillRectangle(55, 40, 70, 40, otherColor);   // Draw a curved line for the smile
+    fillRectangle(55, 41, 70, 41, otherColor);
+    fillRectangle(55, 42, 70, 42, otherColor);
+    fillRectangle(55, 43, 70, 43, otherColor);
+    fillRectangle(55, 44, 70, 44, otherColor);
+}
+
+void drawFilledCircle(int centerX, int centerY, int radius, unsigned int color) {
+    int x, y;
+    for (x = centerX - radius; x <= centerX + radius; x++) 
+        for (y = centerY - radius; y <= centerY + radius; y++) 
+            if ((x - centerX) * (x - centerX) + (y - centerY) * (y - centerY) <= radius * radius) 
+                drawPixel(x, y, color);               
 }
 
 void drawDiagonal(unsigned char col, unsigned char row, unsigned char size)
