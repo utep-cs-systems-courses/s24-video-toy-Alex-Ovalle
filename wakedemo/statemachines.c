@@ -15,11 +15,10 @@ void next_state(int state) {
   case 1:
     newEyeColor = COLOR_BLUE;
     newFaceColor = COLOR_PINK;
-    makeFace(newEyeColor, newFaceColor);
+    drawCatFace();
     keyboard_cat();
     break;
 
-  case 2:
     newEyeColor = COLOR_RED;
     newFaceColor = COLOR_BEIGE;
     makeFace(newEyeColor, newFaceColor);

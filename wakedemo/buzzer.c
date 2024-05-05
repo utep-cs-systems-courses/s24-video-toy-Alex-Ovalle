@@ -84,7 +84,7 @@ void jigglypuff(){
 
   int total_notes = sizeof(melody) / sizeof(melody[0]);
 
-  for (int i = 0; i < 32; i++) {
+  for (int i = 0; i < total_notes; i++) {
     buzzer_set_period(melody[i]);
     __delay_cycles(2500000);
     buzzer_set_period(0);

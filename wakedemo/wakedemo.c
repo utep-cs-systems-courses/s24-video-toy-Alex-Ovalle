@@ -7,6 +7,7 @@
 
 unsigned int color = COLOR_GREEN;
 unsigned int faceColor = COLOR_BLACK;
+
 void update_eyes(int state)
 {
   if(state)
@@ -59,6 +60,32 @@ void makeFace(unsigned int newEyeColor, unsigned int newFaceColor)
       }
     }
   }
+}
+
+void drawCatFace() {
+    // Draw face
+    int x, y;
+    for (x = 5; x <= 62; x++) {
+        drawPixel(x, 5, BLACK);
+    }
+
+    // Draw eyes
+    for (x = 17; x <= 25; x++) {
+        for (y = 10; y <= 15; y++) {
+            drawPixel(x, y, COLOR_BLUE);
+        }
+    }
+
+    for (x = 37; x <= 45; x++) {
+        for (y = 10; y <= 15; y++) {
+            drawPixel(x, y, COLOR_BLUE);
+        }
+    }
+
+    // Draw mouth
+    for (x = 25; x <= 37; x++) {
+        drawPixel(x, 20, COLOR_BEIGE);
+    }
 }
 
 void drawDiagonal(unsigned char col, unsigned char row, unsigned char size)
